@@ -1,6 +1,6 @@
 .POSIX:
 
-all: run
+all: build
 
 build:
 	stack build

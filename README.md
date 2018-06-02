@@ -19,7 +19,7 @@ To run an example
 
 To run the unit tests:
 
-    $ make
+    $ make test
 
 
 ## Viewing the semantics
