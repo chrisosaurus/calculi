@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a49da4b7ff1a47b09d4496a9e9570a541515dc9452d06e527fcc0dfe947482cf
+-- hash: 1ed1e45d19152b8988ffa5145915615077280597411695107e9a89c923b934ca
 
 name:           calculi
 version:        0.1.0.0
@@ -29,6 +29,7 @@ library
       LambdaAssignment.Data.Exp
       LambdaAssignment.Data.Store
       LambdaAssignment.Eval
+      Shared.Lexer
   other-modules:
       Paths_calculi
   hs-source-dirs:
@@ -45,6 +46,7 @@ test-suite calculi-test
       LambdaAssignment.Data.ExpSpec
       LambdaAssignment.Data.StoreSpec
       LambdaAssignment.EvalSpec
+      Shared.LexerSpec
       Paths_calculi
   hs-source-dirs:
       test
