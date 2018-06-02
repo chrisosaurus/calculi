@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5b8d7c5d3bad117ec7a89657d94ce1bc222ab418f3dfc5ea371dbaa2d590245e
+-- hash: a49da4b7ff1a47b09d4496a9e9570a541515dc9452d06e527fcc0dfe947482cf
 
 name:           calculi
 version:        0.1.0.0
@@ -29,7 +29,6 @@ library
       LambdaAssignment.Data.Exp
       LambdaAssignment.Data.Store
       LambdaAssignment.Eval
-      Lib
   other-modules:
       Paths_calculi
   hs-source-dirs:
