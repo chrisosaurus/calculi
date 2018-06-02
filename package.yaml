@@ -25,6 +25,17 @@ dependencies:
 library:
   source-dirs: src
 
+executables:
+  LambdaAssignment:
+    main:                LambdaAssignment.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - calculi
+
 tests:
   calculi-test:
     main:                Spec.hs

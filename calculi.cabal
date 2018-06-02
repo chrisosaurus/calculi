@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 297974b77200df09015e4522601d9314b4b46f881f269227b9c639a3ce67e775
+-- hash: 977f35a874903926cc35816bc7a83c650e3bc7d4ad2e323747707547b29f298d
 
 name:           calculi
 version:        0.1.0.0
@@ -37,6 +37,19 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , containers
+  default-language: Haskell2010
+
+executable LambdaAssignment
+  main-is: LambdaAssignment.hs
+  other-modules:
+      Paths_calculi
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , calculi
     , containers
   default-language: Haskell2010
 

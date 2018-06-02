@@ -1,14 +1,18 @@
 # calculi
 
-A WIP collection of various calculi implementations and their semantics
+A WIP collection of various calculi implementations and their semantics.
+
+Not all calculi will have lexers and parsers, some may only exist as a Haskell ADT.
 
 
 ## Lambda Assignment
 
 Minimum-viable lambda calculus with assignment interpreter.
 
-Lambda calculus terms are represented by a Haskell ADT,
-there is no external syntax and thus no lexer or parser.
+To run an example
+
+    $ make
+    $ stack exec LambdaAssignment examples/LambdaAssignment/if.la
 
 
 ## Running the tests
