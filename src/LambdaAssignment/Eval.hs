@@ -37,8 +37,8 @@ eval_with_context (IfElse exp1 exp2 exp3) context = case cond of
 eval_with_context (Var string) context@(Context _ env) = (val, context)
     where val = env_read env string
 
--- NB: eval App AbsEnv returns original context, the new_context is only used within body of app (exp2)
-eval_with_context (App (AbsEnv string body absenv) exp2) context@(Context store _) = (result, context)
+-- NB: eval App AbsClosure returns original context, the new_context is only used within body of app (exp2)
+eval_with_context (App (AbsClosure string body absenv) exp2) context@(Context store _) = (result, context)
     where (arg, (Context new_store _)) = eval_with_context exp2 context
           new_env = env_write absenv string arg
           new_context = Context new_store new_env
@@ -49,7 +49,7 @@ eval_with_context (App exp1 exp2) context = eval_with_context new_app new_contex
           new_app = App first exp2
 
 eval_with_context (Abs string exp) context@(Context _ env) = (new_abs, context)
-    where new_abs = AbsEnv string exp env
+    where new_abs = AbsClosure string exp env
 
 eval :: Exp -> Exp
 eval exp = result

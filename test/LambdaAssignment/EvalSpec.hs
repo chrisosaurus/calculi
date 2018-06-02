@@ -46,7 +46,7 @@ spec = do
   describe "lambda tests" $ do
     it "simple lambda" $ do
       let expression = (Abs "x" (Var "x"))
-      let expected = (AbsEnv "x" (Var "x") env_new)
+      let expected = (AbsClosure "x" (Var "x") env_new)
       eval expression `shouldBe` expected
 
     it "simple application" $ do

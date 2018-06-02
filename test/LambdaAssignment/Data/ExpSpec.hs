@@ -14,8 +14,8 @@ spec = do
   describe "testing is_normal_form positive cases" $ do
     it "Location" $ do
       is_normal_form (Location 0) `shouldBe` True
-    it "AbsEnv" $ do
-      is_normal_form (AbsEnv "string" Unit env_new) `shouldBe` True
+    it "AbsClosure" $ do
+      is_normal_form (AbsClosure "string" Unit env_new) `shouldBe` True
     it "Unit" $ do
       is_normal_form (Unit) `shouldBe` True
     it "True" $ do

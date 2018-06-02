@@ -17,8 +17,8 @@ type LocationId = Integer
 
 data Exp = Var String
          | Abs String Exp
-         -- an Abs is evaluated to an AbsEnv when first encountered
-         | AbsEnv String Exp Env
+         -- an Abs is evaluated to an AbsClosure when first encountered
+         | AbsClosure String Exp Env
          | App Exp Exp
          | Unit
          | Location LocationId
@@ -33,7 +33,7 @@ data Exp = Var String
 is_normal_form :: Exp -> Bool
 is_normal_form (Location _)   = True
 --is_normal_form (Abs _ _)      = True
-is_normal_form (AbsEnv _ _ _) = True
+is_normal_form (AbsClosure _ _ _) = True
 is_normal_form Unit           = True
 is_normal_form ExpTrue        = True
 is_normal_form ExpFalse       = True
