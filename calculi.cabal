@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 647301ced943f1f30c2be6fbd2c99e1524127f6159c097f5c6461f830dca5a67
+-- hash: 5b8d7c5d3bad117ec7a89657d94ce1bc222ab418f3dfc5ea371dbaa2d590245e
 
 name:           calculi
 version:        0.1.0.0
@@ -17,7 +17,6 @@ license-file:   LICENSE
 build-type:     Simple
 cabal-version:  >= 1.10
 extra-source-files:
-    ChangeLog.md
     README.md
 
 source-repository head
