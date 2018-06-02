@@ -2,7 +2,7 @@ module LambdaAssignment.Data.Exp
 (
     LocationId,
     Exp (..),
-    is_trivial_expression,
+    is_normal_form,
     EnvVal,
     Env (..),
     env_new,
@@ -30,14 +30,14 @@ data Exp = Var String
          | IfElse Exp Exp Exp
     deriving (Show, Eq)
 
-is_trivial_expression :: Exp -> Bool
-is_trivial_expression (Location _)   = True
---is_trivial_expression (Abs _ _)      = True
-is_trivial_expression (AbsEnv _ _ _) = True
-is_trivial_expression Unit           = True
-is_trivial_expression ExpTrue        = True
-is_trivial_expression ExpFalse       = True
-is_trivial_expression _              = False
+is_normal_form :: Exp -> Bool
+is_normal_form (Location _)   = True
+--is_normal_form (Abs _ _)      = True
+is_normal_form (AbsEnv _ _ _) = True
+is_normal_form Unit           = True
+is_normal_form ExpTrue        = True
+is_normal_form ExpFalse       = True
+is_normal_form _              = False
 
 type EnvVal = Exp
 data Env = Env (Map.Map String EnvVal)

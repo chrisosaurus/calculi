@@ -11,33 +11,33 @@ import LambdaAssignment.Data.Exp
 
 spec :: Spec
 spec = do
-  describe "testing is_trivial_expression positive cases" $ do
+  describe "testing is_normal_form positive cases" $ do
     it "Location" $ do
-      is_trivial_expression (Location 0) `shouldBe` True
+      is_normal_form (Location 0) `shouldBe` True
     it "AbsEnv" $ do
-      is_trivial_expression (AbsEnv "string" Unit env_new) `shouldBe` True
+      is_normal_form (AbsEnv "string" Unit env_new) `shouldBe` True
     it "Unit" $ do
-      is_trivial_expression (Unit) `shouldBe` True
+      is_normal_form (Unit) `shouldBe` True
     it "True" $ do
-      is_trivial_expression (ExpTrue) `shouldBe` True
+      is_normal_form (ExpTrue) `shouldBe` True
     it "False" $ do
-      is_trivial_expression (ExpFalse) `shouldBe` True
+      is_normal_form (ExpFalse) `shouldBe` True
 
-  describe "testing is_trivial_expression negative cases" $ do
+  describe "testing is_normal_form negative cases" $ do
     it "Var" $ do
-      is_trivial_expression (Var "string") `shouldBe` False
+      is_normal_form (Var "string") `shouldBe` False
     it "App" $ do
-      is_trivial_expression (App Unit Unit) `shouldBe` False
+      is_normal_form (App Unit Unit) `shouldBe` False
     it "New" $ do
-      is_trivial_expression (New Unit) `shouldBe` False
+      is_normal_form (New Unit) `shouldBe` False
     it "Read" $ do
-      is_trivial_expression (Read Unit) `shouldBe` False
+      is_normal_form (Read Unit) `shouldBe` False
     it "Write" $ do
-      is_trivial_expression (Write Unit Unit) `shouldBe` False
+      is_normal_form (Write Unit Unit) `shouldBe` False
     it "IfElse" $ do
-      is_trivial_expression (IfElse Unit Unit Unit) `shouldBe` False
+      is_normal_form (IfElse Unit Unit Unit) `shouldBe` False
     it "Abs" $ do
-      is_trivial_expression (Abs "string" Unit) `shouldBe` False
+      is_normal_form (Abs "string" Unit) `shouldBe` False
 
   describe "testing simple env operations" $ do
     it "write & read" $ do

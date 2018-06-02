@@ -10,7 +10,7 @@ import LambdaAssignment.Data.Context
 
 eval_with_context :: Exp -> Context -> (Exp, Context)
 
-eval_with_context v context | is_trivial_expression v = (v, context)
+eval_with_context v context | is_normal_form v = (v, context)
 
 
 eval_with_context (New exp) context@(Context store env) = ((Location key), (Context store'' env'))
