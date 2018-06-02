@@ -12,7 +12,10 @@ Minimum-viable lambda calculus with assignment interpreter.
 To run an example
 
     $ make
+    $ cat examples/LambdaAssignment/mutation.la
+    ((\x.((\ignored.(read x)) (write x true))) (new false))
     $ stack exec LambdaAssignment examples/LambdaAssignment/mutation.la
+    "ExpTrue"
 
 ## Running the tests
 
