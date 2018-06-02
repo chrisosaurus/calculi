@@ -17,3 +17,11 @@ To run the unit tests:
 
     $ make
 
+
+## Viewing the semantics
+
+To build and view the semantics for a given calculi
+
+    $ cd docs/LambdaAssignment
+    $ make view
+
