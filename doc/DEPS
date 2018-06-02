@@ -1,0 +1,14 @@
+direct deps:
+
+amssymb - included here
+bussproofs - included here
+syntax - included here from mdwtools package
+
+hyperref - provided by system
+listing - provided by system
+
+included here means download from CTAN
+unzip
+latex foo.ins # optional, only needed if .sty is not already there
+cp foo.sty deps/
+

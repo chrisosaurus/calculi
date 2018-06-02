@@ -1,0 +1,248 @@
+% note 'oneside' here prevents blank pages
+% by default book tries to make every chapter start on odd (left side)
+% so it works better for double-sided books
+% see http://stackoverflow.com/a/8371473/337237
+\documentclass[11pt,oneside]{book}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\def\emptyset{$\varnothing$}
+\def\natnumbers{$\mathbb{N}$}
+\usepackage{bussproofs}
+\usepackage{listings}
+
+% had to add nounderscore when I moved files out into inputs
+% see https://tex.stackexchange.com/a/166630
+\usepackage[nounderscore]{syntax}
+
+\begin{document}
+
+\frontmatter
+
+\mainmatter
+
+\pagebreak
+
+\begin{center}
+    {
+        \bf
+        \huge
+        Lambda Assignment
+    }
+\end{center}
+
+\begin{figure}[!hp]
+\begin{center}
+{
+    \bf
+    \huge
+    Grammar
+}
+\end{center}
+
+
+% taken from https://tex.stackexchange.com/a/24934
+\setlength{\grammarindent}{10em} % increase separation between LHS/RHS
+
+% found in http://texdoc.net/texmf-dist/doc/latex/mdwtools/syntax.pdf
+\setlength{\grammarparsep}{5pt} % default is 8pt, decrease sep, between rules
+
+\textbf{Expressions}
+
+\begin{grammar}
+
+    <e> ::=  x
+        \alt $\lambda$ x.<e>
+        \alt $<e>_1$ $<e>_2$
+        \alt unit
+        \alt L
+        \alt new <e>
+        \alt read <e>
+        \alt write $<e>_1$ $<e>_2$
+        \alt true
+        \alt false
+        \alt if $<e>_1$ $<e>_2$ $<e>_3$
+
+\end{grammar}
+
+\textbf{Trivial Expressions}
+
+\begin{grammar}
+
+    <v> ::=  L
+        \alt $\lambda$ x.<e>
+        \alt unit
+        \alt true
+        \alt false
+
+\end{grammar}
+
+\textbf{Evaluation Contexts}
+
+\begin{grammar}
+
+    <C[\textbullet]> ::=  \textbullet
+                     \alt <C[\textbullet]> $<e>_2$
+                     \alt $<v>_1$ <C[\textbullet]>
+                     \alt new <C[\textbullet]>
+                     \alt read <C[\textbullet]>
+                     \alt write <C[\textbullet]> $<e>_2$
+                     \alt write $<e>_1$ <C[\textbullet]>
+                     \alt if <C[\textbullet]> $<e>_2$ $<e>_3$
+
+\end{grammar}
+
+\end{figure}
+
+\begin{figure}[!hp]
+\hfill
+
+\begin{center}
+{
+    \bf
+    \huge
+    Operational semantics
+}
+\end{center}
+
+\textbf{Syntactic domains}
+
+\begin{tabular}{ l l }
+    \textit{e} & Expression \\
+\end{tabular}
+
+\hfill\break
+
+\textbf{Semantic domains}
+
+\begin{tabular}{ l l }
+    \textit{$\sigma$} : $ Store = Ide \rightarrow Location           $ \\
+\end{tabular}
+
+\hfill\break
+
+\textbf{Operational semantics}
+
+\begin{center}
+\framebox{
+                $
+                <e, \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <e', \sigma'>
+                $
+}
+\end{center}
+
+\begin{prooftree}
+    \AxiomC{ $
+                <e, \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <e', \sigma'>
+             $ }
+    \RightLabel{\it context}
+    \UnaryInfC{ $
+                <C[e], \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <C[e'], \sigma'>
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+             $ }
+    \RightLabel{\it application}
+    \UnaryInfC{ $
+                <(\lambda x . e_1) v_2, \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <e_1 [v_2 / x], \sigma>
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                L \ fresh
+             $ }
+    \RightLabel{\it new}
+    \UnaryInfC{ $
+                <new \ v, \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <L, \sigma[L \mapsto v]>
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+             $ }
+    \RightLabel{\it read}
+    \UnaryInfC{ $
+                <L, \sigma[L \mapsto v]>
+                \quad
+                \rightarrow
+                \quad
+                <v, \sigma>
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+             $ }
+    \RightLabel{\it write}
+    \UnaryInfC{ $
+                <write \ L \ v_2, \sigma[L \mapsto v_1]>
+                \quad
+                \rightarrow
+                \quad
+                <unit, \sigma[L \mapsto v_2]>
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                <e_1, \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <true, \sigma'>
+             $ }
+    \RightLabel{\it if-true}
+    \UnaryInfC{ $
+                <if \ e_1 \ e_2 \ e_3, \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <e_2, \sigma'>
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                <e_1, \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <false, \sigma'>
+             $ }
+    \RightLabel{\it if-false}
+    \UnaryInfC{ $
+                <if \ e_1 \ e_2 \ e_3, \sigma>
+                \quad
+                \rightarrow
+                \quad
+                <e_3, \sigma'>
+                $ }
+\end{prooftree}
+
+\end{figure}
+
+\end{document}
+
