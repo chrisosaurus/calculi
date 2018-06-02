@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3faf998a923a70f421660951eaef7166026bdc4bf6abef55f142f4ae9578f40e
+-- hash: 647301ced943f1f30c2be6fbd2c99e1524127f6159c097f5c6461f830dca5a67
 
 name:           calculi
 version:        0.1.0.0
@@ -26,6 +26,10 @@ source-repository head
 
 library
   exposed-modules:
+      LambdaAssignment.Data.Context
+      LambdaAssignment.Data.Exp
+      LambdaAssignment.Data.Store
+      LambdaAssignment.Eval
       Lib
   other-modules:
       Paths_calculi
@@ -33,12 +37,16 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , containers
   default-language: Haskell2010
 
 test-suite calculi-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      LambdaAssignment.Data.ExpSpec
+      LambdaAssignment.Data.StoreSpec
+      LambdaAssignment.EvalSpec
       Paths_calculi
   hs-source-dirs:
       test
@@ -46,4 +54,6 @@ test-suite calculi-test
   build-depends:
       base >=4.7 && <5
     , calculi
+    , containers
+    , hspec
   default-language: Haskell2010
