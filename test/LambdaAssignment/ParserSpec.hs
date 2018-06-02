@@ -31,19 +31,19 @@ spec = do
       let expected = Right (Var "x")
       parse expression `shouldBe` expected
     it "New" $ do
-      let expression = [Symbol "new", Symbol "unit"]
+      let expression = [LParen, Symbol "new", Symbol "unit", RParen]
       let expected = Right (New Unit)
       parse expression `shouldBe` expected
     it "Read" $ do
-      let expression = [Symbol "new", Symbol "x"]
+      let expression = [LParen, Symbol "new", Symbol "x", RParen]
       let expected = Right (New (Var "x"))
       parse expression `shouldBe` expected
     it "Write" $ do
-      let expression = [Symbol "write", Symbol "x", Symbol "y"]
+      let expression = [LParen, Symbol "write", Symbol "x", Symbol "y", RParen]
       let expected = Right (Write (Var "x") (Var "y"))
       parse expression `shouldBe` expected
     it "If" $ do
-      let expression = [Symbol "if", Symbol "x", Symbol "y", Symbol "z"]
+      let expression = [LParen, Symbol "if", Symbol "x", Symbol "y", Symbol "z", RParen]
       let expected = Right (IfElse (Var "x") (Var "y") (Var "z"))
       parse expression `shouldBe` expected
     it "app" $ do

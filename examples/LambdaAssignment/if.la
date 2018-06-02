@@ -1,2 +1,4 @@
-((\id. if (id true) unit false) (\x.x))
+((\id.
+    (if (id true) unit false))
+ (\x.x))
 

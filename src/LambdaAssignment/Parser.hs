@@ -41,7 +41,7 @@ parse_var _                   = Nothing
 
 -- abs need to be wrapped in parenthesis to avoid syntactic ugly
 parse_abs :: [Token] -> Maybe (Exp, [Token])
-parse_abs ((LParen:Lambda:(Symbol binding):Period:body)) =
+parse_abs (LParen:(Lambda:(Symbol binding):Period:body)) =
     case parse_inner body of
          Left _                   -> Nothing
          Right (e, (RParen:rest)) -> Just (Abs binding e, rest)
@@ -59,32 +59,35 @@ parse_app (LParen:body) =
                                  Right _                    -> Nothing
 
 parse_new :: [Token] -> Maybe (Exp, [Token])
-parse_new ((Symbol "new"):body) =
+parse_new (LParen:(Symbol "new"):body) =
     case parse_inner body of
-         Left _          -> Nothing
-         Right (e, rest) -> Just ((New e), rest)
+         Left _                   -> Nothing
+         Right (e, (RParen:rest)) -> Just ((New e), rest)
+         Right _                  -> Nothing
 parse_new _ = Nothing
 
 parse_read :: [Token] -> Maybe (Exp, [Token])
-parse_read ((Symbol "read"):body) =
+parse_read (LParen:(Symbol "read"):body) =
     case parse_inner body of
-         Left _          -> Nothing
-         Right (e, rest) -> Just ((Read e), rest)
+         Left _                 -> Nothing
+         Right (e, RParen:rest) -> Just ((Read e), rest)
+         Right _                -> Nothing
 
 parse_read _ = Nothing
 
 parse_write :: [Token] -> Maybe (Exp, [Token])
-parse_write ((Symbol "write"):body) =
+parse_write (LParen:(Symbol "write"):body) =
     case parse_inner body of
          Left _          -> Nothing
          Right (e, rest) ->
              case parse_inner rest of
-                  Left _            -> Nothing
-                  Right (e', rest') -> Just ((Write e e'), rest')
+                  Left _                   -> Nothing
+                  Right (e', RParen:rest') -> Just ((Write e e'), rest')
+                  Right _                  -> Nothing
 parse_write _ = Nothing
 
 parse_if :: [Token] -> Maybe (Exp, [Token])
-parse_if ((Symbol "if"):body) =
+parse_if (LParen:(Symbol "if"):body) =
     case parse_inner body of
          Left _          -> Nothing
          Right (e, rest) ->
@@ -92,8 +95,9 @@ parse_if ((Symbol "if"):body) =
                   Left _            -> Nothing
                   Right (e', rest') ->
                       case parse_inner rest' of
-                           Left _              -> Nothing
-                           Right (e'', rest'') -> Just ((IfElse e e' e''), rest'')
+                           Left _                     -> Nothing
+                           Right (e'', RParen:rest'') -> Just ((IfElse e e' e''), rest'')
+                           Right _                    -> Nothing
 parse_if _ = Nothing
 
 
