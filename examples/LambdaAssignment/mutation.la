@@ -1,0 +1,1 @@
+((\x.((\ignored.(read x)) (write x true))) (new false))

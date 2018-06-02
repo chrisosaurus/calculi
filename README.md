@@ -12,8 +12,7 @@ Minimum-viable lambda calculus with assignment interpreter.
 To run an example
 
     $ make
-    $ stack exec LambdaAssignment examples/LambdaAssignment/if.la
-
+    $ stack exec LambdaAssignment examples/LambdaAssignment/mutation.la
 
 ## Running the tests
 
