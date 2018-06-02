@@ -70,6 +70,7 @@
 \begin{grammar}
 
     <v> ::=  L
+        \alt x
         \alt $\lambda$ x.<e>
         \alt unit
         \alt true
@@ -185,7 +186,7 @@
              $ }
     \RightLabel{\it read}
     \UnaryInfC{ $
-                <L, \sigma[L \mapsto v]>
+                <read \ L, \sigma[L \mapsto v]>
                 \quad
                 \rightarrow
                 \quad
