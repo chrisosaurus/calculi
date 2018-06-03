@@ -27,9 +27,13 @@ Untyped lambda calculus with assignment.
 To run an example
 
     $ make
-    $ cat examples/LambdaAssignment/mutation.la
-    ((\x.((\ignored.(read x)) (write x true))) (new false))
-    $ stack exec LambdaAssignment examples/LambdaAssignment/mutation.la
+    $ cat examples/LambdaAssignment/sequencing.la
+    ((\seq.((\x.((seq ((seq (write x false))
+                            (write x true)))
+                      (read x)))
+            (new unit)))
+     (\ignore.(\a.a)))
+    $ stack exec LambdaAssignment examples/LambdaAssignment/sequencing.la
     "ExpTrue"
 
 
