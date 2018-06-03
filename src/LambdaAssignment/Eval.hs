@@ -16,17 +16,17 @@ eval_with_context v context | is_normal_form v = (v, context)
 -- new
 eval_with_context (New exp) context@(Context store env) = ((Location key), (Context store'' env'))
     where (val, (Context store' env')) = eval_with_context exp context
-          (key, store'') = store_alloc store val
+          (key, store'')               = store_alloc store val
 
 -- write
-eval_with_context (Write exp1 exp2) context = (Unit, (Context new_store env))
+eval_with_context write@(Write exp1 exp2) context = (Unit, (Context new_store env))
     where ((Location key), context1)            = eval_with_context exp1 context
           (val,            (Context store env)) = eval_with_context exp2 context1
           new_store                             = store_write store key val
 
 -- read Location
-eval_with_context (Read (Location key)) context@(Context store _) = (val, context)
-    where val = store_read store key
+eval_with_context read@(Read (Location key)) context@(Context store _) =  (val, context)
+    where val = (store_read store key)
 
 -- read expression
 eval_with_context (Read exp1) context@(Context _ _) = eval_with_context (Read loc) new_context
@@ -45,11 +45,15 @@ eval_with_context (Var string) context@(Context _ env) = (val, context)
 
 -- NB: eval App AbsClosure returns original context, the new_context is only used within body of app (exp2)
 -- application Closure
-eval_with_context (App (AbsClosure string body absenv) exp2) context@(Context store _) = (result, context)
-    where (arg, (Context new_store _)) = eval_with_context exp2 context
-          new_env = env_write absenv string arg
-          new_context = Context new_store new_env
-          (result, garbage_context) = eval_with_context body new_context
+eval_with_context call@(App (AbsClosure string body absenv) exp2) context@(Context store original_env) = (result, result_context)
+          -- need to capture any side effects from evaluating arguments
+    where (arg, context1@(Context new_store _)) = (eval_with_context exp2 context)
+          new_env                               = env_write absenv string arg
+          new_context                           = Context new_store new_env
+          (result, (Context final_store _))     = eval_with_context body new_context
+          -- need to return a context containing all side effects (new store)
+          -- but still containing external environment (original_env)
+          result_context                        = Context final_store original_env
 
 -- application' expression
 eval_with_context (App exp1 exp2) context = eval_with_context new_app new_context

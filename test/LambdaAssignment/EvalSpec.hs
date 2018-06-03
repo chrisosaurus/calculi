@@ -74,6 +74,17 @@ spec = do
       let expected = ExpTrue
       eval expression `shouldBe` expected
 
+    -- examples/LambdaAssignment/sequencing.la
+    it "application side effects" $ do
+      let expression = (App
+                         (Abs "seq" (App
+                                      (Abs "x" (App
+                                                 (App (Var "seq") (Write (Var "x") ExpTrue))
+                                                 (Read (Var "x"))))
+                                      (New ExpFalse)))
+                         (Abs "ignore" (Abs "a" (Var "a"))))
+      let expected = ExpTrue
+      eval expression `shouldBe` expected
 
 main :: IO ()
 main = hspec spec

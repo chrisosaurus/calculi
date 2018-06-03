@@ -1,0 +1,4 @@
+((\seq.((\x.((seq (write x true))
+                  (read x)))
+        (new false)))
+ (\ignore.(\a.a)))
