@@ -1,1 +1,3 @@
-((\x.((\ignored.(read x)) (write x true))) (new false))
+((\x.((\ignored.(read x))
+      (write x true)))
+ (new false))
