@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b74c87df063162cb7ac70387838a1e4f7977d687107671a1122872cafa2762c4
+-- hash: d9f0597c2b721a47e7c5779be21e74224b78fca0fcd687539f4fcbfd7107bea8
 
 name:           calculi
 version:        0.1.0.0
@@ -35,6 +35,7 @@ library
       LambdaUntyped.Parser
       Shared.Data.Env
       Shared.Lexer
+      Shared.Parser
   other-modules:
       Paths_calculi
   hs-source-dirs:
