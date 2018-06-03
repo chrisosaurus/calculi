@@ -14,6 +14,8 @@ data Token = Lambda
            | Period
            | LParen
            | RParen
+           | Colon
+           | Arrow
            | Symbol String
     deriving (Show, Eq)
 
@@ -22,6 +24,8 @@ stringify_token Lambda = "\\"
 stringify_token Period = "."
 stringify_token LParen = "("
 stringify_token RParen = ")"
+stringify_token Colon  = ":"
+stringify_token Arrow  = "->"
 stringify_token (Symbol str) = str
 
 stringify_tokens :: [Token] -> String
@@ -37,6 +41,8 @@ lexer string                 =
          <|> lexer_period string
          <|> lexer_lparen string
          <|> lexer_rparen string
+         <|> lexer_colon  string
+         <|> lexer_arrow  string
          <|> lexer_symbol string of
              Nothing                  -> Left $ "Failed to parse: " ++ string
              Just (token, [])         -> Right [token]
@@ -64,6 +70,14 @@ lexer_rparen :: String -> Maybe(Token, String)
 lexer_rparen (')':rest) = Just (RParen, rest)
 lexer_rparen _          = Nothing
 
+lexer_colon :: String -> Maybe(Token, String)
+lexer_colon (':':rest) = Just (Colon, rest)
+lexer_colon _          = Nothing
+
+lexer_arrow :: String -> Maybe(Token, String)
+lexer_arrow ('-':'>':rest) = Just (Arrow, rest)
+lexer_arrow _              = Nothing
+
 lexer_symbol :: String -> Maybe (Token, String)
 lexer_symbol string = lexer_symbol' string ""
 
@@ -86,6 +100,9 @@ should_break ch | isSpace ch = True
 should_break '('             = True
 should_break ')'             = True
 should_break '.'             = True
+should_break ':'             = True
+-- start of arrow
+should_break '-'             = True
 should_break '\\'            = True
 should_break _               = False
 

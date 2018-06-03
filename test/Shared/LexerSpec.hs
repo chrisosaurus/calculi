@@ -79,6 +79,21 @@ spec = do
       let expected = Left "Failed to parse: ]"
       lexer expression `shouldBe` expected
 
+  describe "simply typed" $ do
+    it "abstraction" $ do
+      let expression = "((\\id:Bool->Bool.  (if (id true) unit false)) (\\x:Bool.x))"
+      let expected = Right [LParen,
+                              LParen, Lambda, Symbol "id", Colon, Symbol "Bool", Arrow, Symbol "Bool", Period,
+                                LParen, Symbol "if",
+                                  LParen, Symbol "id", Symbol "true", RParen,
+                                  Symbol "unit", Symbol "false",
+                                RParen,
+                              RParen,
+                              LParen, Lambda, Symbol "x", Colon, Symbol "Bool", Period, Symbol "x", RParen,
+                            RParen]
+      lexer expression `shouldBe` expected
+
+
 main :: IO ()
 main = hspec spec
 

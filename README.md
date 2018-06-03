@@ -37,6 +37,23 @@ To run an example
     "ExpTrue"
 
 
+## Lambda Simply Typed
+
+WIP Simply typed lambda calculus.
+
+Currently lacks type checking and semantic specification.
+
+To run an example
+
+    $ make
+    $ cat examples/LambdaSimplyTyped/if.lt
+    ((\id:Bool->Bool.
+        (if (id true) unit false))
+     (\x:Bool.x))
+    $ stack exec LambdaSimplyTyped examples/LambdaSimplyTyped/if.lt
+    "Unit"
+
+
 ## Running the tests
 
 To run the unit tests:

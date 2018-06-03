@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d9f0597c2b721a47e7c5779be21e74224b78fca0fcd687539f4fcbfd7107bea8
+-- hash: a6a1c120fa22389fc17ffb09ed18716650e3270912d52e8b1b3d751a3b4a6180
 
 name:           calculi
 version:        0.1.0.0
@@ -30,6 +30,9 @@ library
       LambdaAssignment.Data.Store
       LambdaAssignment.Eval
       LambdaAssignment.Parser
+      LambdaSimplyTyped.Data.Exp
+      LambdaSimplyTyped.Eval
+      LambdaSimplyTyped.Parser
       LambdaUntyped.Data.Exp
       LambdaUntyped.Eval
       LambdaUntyped.Parser
@@ -58,6 +61,19 @@ executable LambdaAssignment
     , containers
   default-language: Haskell2010
 
+executable LambdaSimplyTyped
+  main-is: Main.hs
+  other-modules:
+      Paths_calculi
+  hs-source-dirs:
+      app/LambdaSimplyTyped
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , calculi
+    , containers
+  default-language: Haskell2010
+
 executable LambdaUntyped
   main-is: Main.hs
   other-modules:
@@ -79,6 +95,9 @@ test-suite calculi-test
       LambdaAssignment.Data.StoreSpec
       LambdaAssignment.EvalSpec
       LambdaAssignment.ParserSpec
+      LambdaSimplyTyped.Data.ExpSpec
+      LambdaSimplyTyped.EvalSpec
+      LambdaSimplyTyped.ParserSpec
       LambdaUntyped.Data.ExpSpec
       LambdaUntyped.EvalSpec
       LambdaUntyped.ParserSpec

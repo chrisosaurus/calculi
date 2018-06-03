@@ -8,6 +8,7 @@ module Shared.Parser
     parse_triple,
     parse_abs,
     parse_app,
+    ParserFunction,
 )
 where
 
@@ -83,7 +84,7 @@ parse_triple _ _ _ _ = Nothing
 
 -- abs need to be wrapped in parenthesis to avoid syntactic ugly
 parse_abs :: (String -> a -> a) -> ParserFunction a
-parse_abs ast_node pi (LParen:(Lambda:(Symbol binding):Period:body)) =
+parse_abs ast_node pi (LParen:Lambda:(Symbol binding):Period:body) =
     case pi body of
          Left _                   -> Nothing
          Right (e, (RParen:rest)) -> Just (ast_node binding e, rest)
