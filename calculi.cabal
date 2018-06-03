@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2731c465bce9dd3fb42224120785e4a887b407afd75c1e56c29eb964737d123f
+-- hash: b74c87df063162cb7ac70387838a1e4f7977d687107671a1122872cafa2762c4
 
 name:           calculi
 version:        0.1.0.0
@@ -30,6 +30,9 @@ library
       LambdaAssignment.Data.Store
       LambdaAssignment.Eval
       LambdaAssignment.Parser
+      LambdaUntyped.Data.Exp
+      LambdaUntyped.Eval
+      LambdaUntyped.Parser
       Shared.Data.Env
       Shared.Lexer
   other-modules:
@@ -42,11 +45,24 @@ library
   default-language: Haskell2010
 
 executable LambdaAssignment
-  main-is: LambdaAssignment.hs
+  main-is: Main.hs
   other-modules:
       Paths_calculi
   hs-source-dirs:
-      app
+      app/LambdaAssignment
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , calculi
+    , containers
+  default-language: Haskell2010
+
+executable LambdaUntyped
+  main-is: Main.hs
+  other-modules:
+      Paths_calculi
+  hs-source-dirs:
+      app/LambdaUntyped
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
@@ -62,6 +78,9 @@ test-suite calculi-test
       LambdaAssignment.Data.StoreSpec
       LambdaAssignment.EvalSpec
       LambdaAssignment.ParserSpec
+      LambdaUntyped.Data.ExpSpec
+      LambdaUntyped.EvalSpec
+      LambdaUntyped.ParserSpec
       Shared.Data.EnvSpec
       Shared.LexerSpec
       Paths_calculi
