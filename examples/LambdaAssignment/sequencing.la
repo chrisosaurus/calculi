@@ -1,4 +1,5 @@
-((\seq.((\x.((seq (write x true))
+((\seq.((\x.((seq ((seq (write x false))
+                        (write x true)))
                   (read x)))
-        (new false)))
+        (new unit)))
  (\ignore.(\a.a)))

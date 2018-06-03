@@ -74,7 +74,6 @@ spec = do
       let expected = ExpTrue
       eval expression `shouldBe` expected
 
-    -- examples/LambdaAssignment/sequencing.la
     it "application side effects" $ do
       let expression = (App
                          (Abs "seq" (App
