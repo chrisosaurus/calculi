@@ -7,6 +7,7 @@ where
 import LambdaAssignment.Data.Exp
 import LambdaAssignment.Data.Store
 import LambdaAssignment.Data.Context
+import Shared.Data.Env
 
 eval_with_context :: Exp -> Context -> (Exp, Context)
 

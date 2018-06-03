@@ -9,6 +9,7 @@ import Test.Hspec
 
 import LambdaAssignment.Data.Exp
 import LambdaAssignment.Eval
+import Shared.Data.Env
 
 spec :: Spec
 spec = do
