@@ -7,10 +7,9 @@ Not all calculi will have lexers and parsers, some may only exist as a Haskell A
 
 ## Lambda Untyped
 
-Simple untyped lambda calculus.
+Untyped lambda calculus.
 
 To run an example
-
 
     $ make
     $ cat example/LambdaUntyped/if.lu
@@ -23,7 +22,7 @@ To run an example
 
 ## Lambda Assignment
 
-Minimum-viable lambda calculus with assignment interpreter.
+Untyped lambda calculus with assignment.
 
 To run an example
 
