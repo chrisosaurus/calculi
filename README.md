@@ -16,7 +16,7 @@ To run an example
     ((\id.
         (if (id true) unit false))
      (\x.x))
-    $ stack exec LambdaUntyped examples/LambdaUntyped/if.la 
+    $ stack exec LambdaUntyped examples/LambdaUntyped/if.lu
     "Unit"
 
 
