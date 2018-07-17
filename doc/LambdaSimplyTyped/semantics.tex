@@ -1,0 +1,304 @@
+% note 'oneside' here prevents blank pages
+% by default book tries to make every chapter start on odd (left side)
+% so it works better for double-sided books
+% see http://stackoverflow.com/a/8371473/337237
+\documentclass[11pt,oneside]{book}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\def\emptyset{$\varnothing$}
+\def\natnumbers{$\mathbb{N}$}
+\usepackage{bussproofs}
+\usepackage{listings}
+
+% had to add nounderscore when I moved files out into inputs
+% see https://tex.stackexchange.com/a/166630
+\usepackage[nounderscore]{syntax}
+
+\begin{document}
+
+\frontmatter
+
+\mainmatter
+
+\pagebreak
+
+\begin{center}
+    {
+        \bf
+        \huge
+        Lambda Simply Typed
+    }
+\end{center}
+
+\begin{center}
+{
+    \bf
+    \huge
+    Grammar
+}
+\end{center}
+
+
+% taken from https://tex.stackexchange.com/a/24934
+\setlength{\grammarindent}{10em} % increase separation between LHS/RHS
+
+% found in http://texdoc.net/texmf-dist/doc/latex/mdwtools/syntax.pdf
+\setlength{\grammarparsep}{5pt} % default is 8pt, decrease sep, between rules
+
+\textbf{Expressions}
+
+\begin{grammar}
+
+    <e> ::=  x
+        \alt $\lambda$ x:T.<e>
+        \alt $<e>_1$ $<e>_2$
+        \alt unit
+        \alt true
+        \alt false
+        \alt if $<e>_1$ $<e>_2$ $<e>_3$
+
+\end{grammar}
+
+\textbf{Values}
+
+\begin{grammar}
+
+    <e> ::=  $\lambda$ x:T.<e>
+        \alt unit
+        \alt true
+        \alt false
+
+\end{grammar}
+
+\textbf{Types}
+
+\begin{grammar}
+
+    <T> ::= T $\rightarrow$ T
+        \alt Bool
+
+\end{grammar}
+
+\textbf{Typing Contexts}
+
+\begin{grammar}
+
+    <$\Gamma$> ::=  $\varnothing$
+               \alt $\Gamma$, x:T
+
+\end{grammar}
+
+\textbf{Evaluation Contexts}
+
+\begin{grammar}
+
+    <C[\textbullet]> ::=  \textbullet
+                     \alt <C[\textbullet]> $<e>_2$
+                     \alt $<v>_1$ <C[\textbullet]>
+                     \alt if <C[\textbullet]> $<e>_2$ $<e>_3$
+\end{grammar}
+
+\hfill
+\begin{center}
+{
+    \bf
+    \huge
+    Operational semantics
+}
+\end{center}
+
+\textbf{Syntactic domains}
+
+\begin{tabular}{ l l }
+    \textit{e} & Expression \\
+    \textit{v} & Values \\
+\end{tabular}
+
+\hfill\break
+
+\textbf{Operational semantics}
+
+\begin{center}
+\framebox{
+                $
+                e
+                \quad
+                \rightarrow
+                \quad
+                e'
+                $
+}
+\end{center}
+
+\begin{prooftree}
+    \AxiomC{ $
+                e
+                \quad
+                \rightarrow
+                \quad
+                e'
+             $ }
+    \RightLabel{\it context}
+    \UnaryInfC{ $
+                C[e]
+                \quad
+                \rightarrow
+                \quad
+                C[e']
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+             $ }
+    \RightLabel{\it application}
+    \UnaryInfC{ $
+                (\lambda x : T . e_1) v_2
+                \quad
+                \rightarrow
+                \quad
+                e_1 [v_2 / x]
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                e_1
+                \quad
+                \rightarrow
+                \quad
+                true
+             $ }
+    \RightLabel{\it if-true}
+    \UnaryInfC{ $
+                if \ e_1 \ e_2 \ e_3
+                \quad
+                \rightarrow
+                \quad
+                e_2
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                e_1
+                \quad
+                \rightarrow
+                \quad
+                false
+             $ }
+    \RightLabel{\it if-false}
+    \UnaryInfC{ $
+                if \ e_1 \ e_2 \ e_3
+                \quad
+                \rightarrow
+                \quad
+                e_3
+                $ }
+\end{prooftree}
+
+\hfill
+\begin{center}
+{
+    \bf
+    \huge
+    Typing semantics
+}
+\end{center}
+
+\hfill\break
+
+\textbf{Typing semantics}
+
+\begin{center}
+\framebox{
+                $
+                \Gamma
+                \quad
+                \vdash
+                \quad
+                e : T
+                $
+}
+\end{center}
+
+\begin{prooftree}
+    \AxiomC{ $
+                x:T
+                \in
+                \Gamma
+             $ }
+    \RightLabel{\it T-variable}
+    \UnaryInfC{ $
+                \Gamma
+                \vdash
+                x : T
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                \Gamma, x:T_1
+                \vdash
+                e : T_2
+             $ }
+    \RightLabel{\it T-abstraction}
+    \UnaryInfC{ $
+                \Gamma
+                \vdash
+                (\lambda x:T_1 . \ e) : T_1 \rightarrow T_2
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                \Gamma \vdash e_1 : T_1 \rightarrow T_2
+                \quad
+                \Gamma \vdash e_2 : T_1
+             $ }
+    \RightLabel{\it T-application}
+    \UnaryInfC{ $
+                \Gamma
+                \vdash
+                e_1 \ e_2 : T_2
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+             $ }
+    \RightLabel{\it T-true}
+    \UnaryInfC{ $
+                true : Bool
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+             $ }
+    \RightLabel{\it T-false}
+    \UnaryInfC{ $
+                false : Bool
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                \Gamma \vdash e_1 : Bool
+                \quad
+                \Gamma \vdash e_2 : T
+                \quad
+                \Gamma \vdash e_3 : T
+             $ }
+    \RightLabel{\it T-if}
+    \UnaryInfC{ $
+                \Gamma \vdash
+                if \ e_1 \ e_2 \ e_3
+                :
+                T
+                $ }
+\end{prooftree}
+
+\end{document}
+
