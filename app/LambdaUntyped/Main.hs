@@ -4,22 +4,15 @@ module Main
 )
 where
 
-import System.Environment
 import Shared.Lexer
+import Shared.Driver
 import LambdaUntyped.Parser
 import LambdaUntyped.Eval
 
 main :: IO ()
 main = do
-    args <- getArgs
-    if length args == 0 || length args > 1
-    then print "Please provide a single argument which is the filename"
-    else do
-        let (filename:[]) = args
-        contents <- readFile filename
-        case lexer contents of
-             Left err     -> print err
-             Right tokens -> do
-                case parse tokens of
-                     Left err  -> print err
-                     Right exp -> print $ show $ eval exp
+    contents <- readFileArgument
+    let interpreter = Interpreter lexer parse [(liftEval eval)]
+    let out = interpret contents interpreter
+    print $ show out
+
