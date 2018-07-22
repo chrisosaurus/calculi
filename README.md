@@ -17,7 +17,7 @@ To run an example
         (if (id true) unit false))
      (\x.x))
     $ stack exec LambdaUntyped examples/LambdaUntyped/if.lu
-    "Unit"
+    ExpUnit
 
 
 ## Lambda Assignment
@@ -34,7 +34,7 @@ To run an example
             (new unit)))
      (\ignore.(\a.a)))
     $ stack exec LambdaAssignment examples/LambdaAssignment/sequencing.la
-    "ExpTrue"
+    ExpTrue
 
 
 ## Lambda Simply Typed
@@ -49,7 +49,7 @@ To run an example
         (if (id true) unit false))
      (\x:Bool.x))
     $ stack exec LambdaSimplyTyped examples/LambdaSimplyTyped/if.lt
-    "Unit"
+    ExpUnit
 
 
 ## Running the tests
