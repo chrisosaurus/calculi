@@ -52,10 +52,10 @@ To run an example
     $ stack exec LambdaSimplyTyped examples/LambdaSimplyTyped/if.lt
     unit
 
-    $ cat examples/LambdaUntyped/id.lu
-    (\x.x)
-    $ stack exec LambdaUntyped examples/LambdaUntyped/id.lu
-    (\x.x)
+    $ cat examples/LambdaSimplyTyped/id.lt
+    (\x:Bool.x)
+    $ stack exec LambdaSimplyTyped examples/LambdaSimplyTyped/id.lt
+    (\x:Bool.x)
 
 
 ## Running the tests
