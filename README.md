@@ -39,9 +39,7 @@ To run an example
 
 ## Lambda Simply Typed
 
-WIP Simply typed lambda calculus.
-
-Currently lacks type checking and semantic specification.
+Simply typed lambda calculus.
 
 To run an example
 
