@@ -65,7 +65,7 @@ spec = do
   describe "lambda error tests" $ do
     it "incorrect application" $ do
       let expression = (App (Abs "x" BoolType (Var "x")) ExpUnit)
-      let expected = Left "Function applied to wrong type. 'Bool -> Bool' was applied to type 'Unit'."
+      let expected = Left "Function applied to wrong type. 'Bool->Bool' was applied to type 'Unit'."
       typecheck_with_env expression blank_env `shouldBe` expected
 
 main :: IO ()

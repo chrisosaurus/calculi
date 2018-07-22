@@ -22,7 +22,7 @@ showSimpleType BoolType = "Bool"
 showSimpleType (FuncType l r) = res
     where l_t = showSimpleType l
           r_t = showSimpleType r
-          res = l_t ++ " -> " ++ r_t
+          res = l_t ++ "->" ++ r_t
 
 data Exp = Var String
          --   binding type
