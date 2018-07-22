@@ -11,7 +11,7 @@ import LambdaSimplyTyped.Data.Exp
 parse = build_parser [
     parse_unit  "true"  ExpTrue,
     parse_unit  "false" ExpFalse,
-    parse_unit  "unit"  Unit,
+    parse_unit  "unit"  ExpUnit,
     typed_parse_abs,
     parse_triple "if"   IfElse,
     parse_var           Var,

@@ -15,8 +15,8 @@ spec :: Spec
 spec = do
   describe "simple eval tests" $ do
     it "Unit" $ do
-      let expression = Unit
-      let expected = Unit
+      let expression = ExpUnit
+      let expected = ExpUnit
       eval expression `shouldBe` expected
 
     it "True" $ do
@@ -30,13 +30,13 @@ spec = do
       eval expression `shouldBe` expected
 
     it "IfElse True" $ do
-      let expression = IfElse ExpTrue Unit (Var "doesnt exist, will blow up if eval-ed")
-      let expected = Unit
+      let expression = IfElse ExpTrue ExpUnit (Var "doesnt exist, will blow up if eval-ed")
+      let expected = ExpUnit
       eval expression `shouldBe` expected
 
     it "IfElse False" $ do
-      let expression = IfElse ExpFalse (Var "doesnt exist, will blow up if eval-ed") Unit
-      let expected = Unit
+      let expression = IfElse ExpFalse (Var "doesnt exist, will blow up if eval-ed") ExpUnit
+      let expected = ExpUnit
       eval expression `shouldBe` expected
 
   describe "lambda tests" $ do
@@ -46,8 +46,8 @@ spec = do
       eval expression `shouldBe` expected
 
     it "simple application" $ do
-      let expression = (App (Abs "x" (Var "x")) Unit)
-      let expected = Unit
+      let expression = (App (Abs "x" (Var "x")) ExpUnit)
+      let expected = ExpUnit
       eval expression `shouldBe` expected
 
 main :: IO ()

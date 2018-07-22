@@ -15,7 +15,7 @@ data Exp = Var String
          -- an Abs is evaluated to an AbsClosure when first encountered
          | AbsClosure String Exp (Env Exp)
          | App Exp Exp
-         | Unit
+         | ExpUnit
          | Location LocationId
          | New Exp
          | Read Exp
@@ -29,7 +29,7 @@ is_normal_form :: Exp -> Bool
 is_normal_form (Location _)   = True
 --is_normal_form (Abs _ _)      = True
 is_normal_form (AbsClosure _ _ _) = True
-is_normal_form Unit           = True
+is_normal_form ExpUnit           = True
 is_normal_form ExpTrue        = True
 is_normal_form ExpFalse       = True
 is_normal_form _              = False

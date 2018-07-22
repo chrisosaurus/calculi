@@ -20,7 +20,7 @@ eval_with_context (New exp) context@(Context store env) = ((Location key), (Cont
           (key, store'')               = store_alloc store val
 
 -- write
-eval_with_context write@(Write exp1 exp2) context = (Unit, (Context new_store env))
+eval_with_context write@(Write exp1 exp2) context = (ExpUnit, (Context new_store env))
     where ((Location key), context1)            = eval_with_context exp1 context
           (val,            (Context store env)) = eval_with_context exp2 context1
           new_store                             = store_write store key val

@@ -15,8 +15,8 @@ spec :: Spec
 spec = do
   describe "simple eval tests" $ do
     it "Unit" $ do
-      let expression = Unit
-      let expected = Unit
+      let expression = ExpUnit
+      let expected = ExpUnit
       eval expression `shouldBe` expected
 
     it "Location" $ do

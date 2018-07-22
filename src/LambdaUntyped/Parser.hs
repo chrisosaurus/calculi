@@ -10,7 +10,7 @@ import LambdaUntyped.Data.Exp
 parse = build_parser [
     parse_unit  "true"  ExpTrue,
     parse_unit  "false" ExpFalse,
-    parse_unit  "unit"  Unit,
+    parse_unit  "unit"  ExpUnit,
     parse_abs           Abs,
     parse_triple "if"   IfElse,
     parse_var           Var,

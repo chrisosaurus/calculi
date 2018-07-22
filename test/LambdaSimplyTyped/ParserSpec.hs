@@ -16,7 +16,7 @@ spec = do
   describe "simple parser tests" $ do
     it "Unit" $ do
       let expression = [Symbol "unit"]
-      let expected = Right Unit
+      let expected = Right ExpUnit
       parse expression `shouldBe` expected
     it "True" $ do
       let expression = [Symbol "true"]
@@ -65,7 +65,7 @@ spec = do
                           LParen, Lambda, Symbol "x", Colon, Symbol "Bool", Period, Symbol "x", RParen,
                         RParen]
       let expected = Right (App (Abs "id" (FuncType BoolType BoolType) (IfElse (App (Var "id") ExpTrue)
-                                                                               Unit
+                                                                               ExpUnit
                                                                                ExpFalse))
                                 (Abs "x" BoolType (Var "x")))
       parse expression `shouldBe` expected

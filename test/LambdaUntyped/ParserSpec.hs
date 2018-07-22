@@ -16,7 +16,7 @@ spec = do
   describe "simple parser tests" $ do
     it "Unit" $ do
       let expression = [Symbol "unit"]
-      let expected = Right Unit
+      let expected = Right ExpUnit
       parse expression `shouldBe` expected
     it "True" $ do
       let expression = [Symbol "true"]
