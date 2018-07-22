@@ -76,6 +76,7 @@
 \begin{grammar}
 
     <T> ::= T $\rightarrow$ T
+        \alt Unit
         \alt Bool
 
 \end{grammar}
@@ -262,6 +263,15 @@
                 \Gamma
                 \vdash
                 e_1 \ e_2 : T_2
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+             $ }
+    \RightLabel{\it T-unit}
+    \UnaryInfC{ $
+                unit : Unit
                 $ }
 \end{prooftree}
 
