@@ -17,7 +17,7 @@ spec = do
       let key = "some unique key"
       let inserted_val = Var "some really unique string"
       let env' = env_write env key inserted_val
-      let fetched_val = env_read env' key
+      let fetched_val = env_unsafe_read env' key
       fetched_val `shouldBe` inserted_val
 
     it "overwrite" $ do
@@ -27,7 +27,7 @@ spec = do
       let second_val = Var "some slightly different but still really unique string"
       let env' = env_write env key first_val
       let env'' = env_write env' key second_val
-      let fetched_val = env_read env'' key
+      let fetched_val = env_unsafe_read env'' key
       fetched_val `shouldBe` second_val
 
 

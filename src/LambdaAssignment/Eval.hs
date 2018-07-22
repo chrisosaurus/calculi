@@ -42,7 +42,7 @@ eval_with_context (IfElse exp1 exp2 exp3) context = case cond of
     where (cond, context1) = eval_with_context exp1 context
 
 eval_with_context (Var string) context@(Context _ env) = (val, context)
-    where val = env_read env string
+    where val = env_unsafe_read env string
 
 -- NB: eval App AbsClosure returns original context, the new_context is only used within body of app (exp2)
 -- application Closure

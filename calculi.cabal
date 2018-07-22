@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6ae92806392a4eb88473f53ca30f627438e1e183ae4a639e3efbbd3dc27a51d4
+-- hash: 7b08a95f041ce019b30723bb85040c1b04dac140ab95056ecab40314499f72e2
 
 name:           calculi
 version:        0.1.0.0
@@ -33,6 +33,7 @@ library
       LambdaSimplyTyped.Data.Exp
       LambdaSimplyTyped.Eval
       LambdaSimplyTyped.Parser
+      LambdaSimplyTyped.TypeCheck
       LambdaUntyped.Data.Exp
       LambdaUntyped.Eval
       LambdaUntyped.Parser
@@ -99,6 +100,7 @@ test-suite calculi-test
       LambdaSimplyTyped.Data.ExpSpec
       LambdaSimplyTyped.EvalSpec
       LambdaSimplyTyped.ParserSpec
+      LambdaSimplyTyped.TypeCheckSpec
       LambdaUntyped.Data.ExpSpec
       LambdaUntyped.EvalSpec
       LambdaUntyped.ParserSpec
