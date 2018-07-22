@@ -35,7 +35,24 @@ data Exp = Var String
          | ExpTrue
          | ExpFalse
          | IfElse Exp Exp Exp
-    deriving (Show, Eq)
+    deriving (Eq)
+
+instance Show Exp where
+    show = showExp
+
+showExp :: Exp -> String
+showExp (Var name) = name
+showExp (Abs name ty body) = "(\\" ++ name ++ ":" ++ (show ty) ++ "." ++
+                                                     (showExp body) ++ ")"
+showExp (AbsClosure name ty body _) = showExp (Abs name ty body)
+showExp (App left right) = "(" ++ (showExp left) ++ " " ++
+                                  (showExp right) ++ ")"
+showExp ExpUnit = "unit"
+showExp ExpTrue = "true"
+showExp ExpFalse = "false"
+showExp (IfElse cond left right) = "(if " ++ (showExp cond)  ++ " " ++
+                                             (showExp left)  ++ " " ++
+                                             (showExp right) ++ ")"
 
 is_normal_form :: Exp -> Bool
 --is_normal_form (Abs _ _)      = True

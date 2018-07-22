@@ -17,7 +17,7 @@ To run an example
         (if (id true) unit false))
      (\x.x))
     $ stack exec LambdaUntyped examples/LambdaUntyped/if.lu
-    ExpUnit
+    unit
 
 
 ## Lambda Assignment
@@ -34,7 +34,7 @@ To run an example
             (new unit)))
      (\ignore.(\a.a)))
     $ stack exec LambdaAssignment examples/LambdaAssignment/sequencing.la
-    ExpTrue
+    true
 
 
 ## Lambda Simply Typed
@@ -44,12 +44,18 @@ Simply typed lambda calculus.
 To run an example
 
     $ make
+
     $ cat examples/LambdaSimplyTyped/if.lt
     ((\id:Bool->Bool.
         (if (id true) unit false))
      (\x:Bool.x))
     $ stack exec LambdaSimplyTyped examples/LambdaSimplyTyped/if.lt
-    ExpUnit
+    unit
+
+    $ cat examples/LambdaUntyped/id.lu
+    (\x.x)
+    $ stack exec LambdaUntyped examples/LambdaUntyped/id.lu
+    (\x.x)
 
 
 ## Running the tests
