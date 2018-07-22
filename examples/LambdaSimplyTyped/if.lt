@@ -1,4 +1,4 @@
 ((\id:Bool->Bool.
-    (if (id true) unit false))
+    (if (id true) unit unit))
  (\x:Bool.x))
 
