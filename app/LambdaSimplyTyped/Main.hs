@@ -18,5 +18,5 @@ main = do
                  ]
     let interpreter = Interpreter lexer parse stages
     let out = interpret contents interpreter
-    print $ show out
+    putStrLn $ showResult out
 

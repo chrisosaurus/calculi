@@ -4,6 +4,7 @@ module Shared.Driver
     Interpreter (..),
     interpret,
     liftEval,
+    showResult,
 )
 where
 
@@ -57,3 +58,6 @@ foldStages e (x:xs) = case x e of
 liftEval :: (exp -> exp) -> (exp -> Either String exp)
 liftEval eval = \e -> Right (eval e)
 
+showResult :: Show exp => Either String exp -> String
+showResult (Left  err) = "ERROR: " ++ err
+showResult (Right exp) = show exp

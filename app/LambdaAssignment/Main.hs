@@ -14,4 +14,4 @@ main = do
     contents <- readFileArgument
     let interpreter = Interpreter lexer parse [(liftEval eval)]
     let out = interpret contents interpreter
-    print $ show out
+    putStrLn $ showResult out
