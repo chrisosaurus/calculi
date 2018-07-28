@@ -67,20 +67,24 @@ spec = do
 
   describe "lexer error handling" $ do
     it "unknown char" $ do
-      let expression = "["
-      let expected = Left "Failed to parse: ["
+      let expression = "{"
+      let expected = Left "Failed to parse: {"
       lexer expression `shouldBe` expected
     it "spaces" $ do
-      let expression = "  ["
-      let expected = Left "Failed to parse: ["
+      let expression = "  {"
+      let expected = Left "Failed to parse: {"
       lexer expression `shouldBe` expected
     it "invalid symbol" $ do
-      let expression = "he]"
-      let expected = Left "Failed to parse: ]"
+      let expression = "he}"
+      let expected = Left "Failed to parse: }"
       lexer expression `shouldBe` expected
 
-  describe "simply typed" $ do
-    it "abstraction" $ do
+  describe "Simply Typed" $ do
+    it "abstraction 1" $ do
+      let expression = "(\\x:Unit.x)"
+      let expected = Right [LParen, Lambda, Symbol "x", Colon, Symbol "Unit", Period, Symbol "x", RParen]
+      lexer expression `shouldBe` expected
+    it "abstraction 2" $ do
       let expression = "((\\id:Bool->Bool.  (if (id true) unit false)) (\\x:Bool.x))"
       let expected = Right [LParen,
                               LParen, Lambda, Symbol "id", Colon, Symbol "Bool", Arrow, Symbol "Bool", Period,
@@ -93,6 +97,15 @@ spec = do
                             RParen]
       lexer expression `shouldBe` expected
 
+  describe "System F syntax" $ do
+    it "type abstraction" $ do
+      let expression = "(/\\X.x)"
+      let expected = Right [LParen, LAMBDA, Symbol "X", Period, Symbol "x", RParen]
+      lexer expression `shouldBe` expected
+    it "type application" $ do
+      let expression = "x [Unit]"
+      let expected = Right [Symbol "x", LBrack, Symbol "Unit", RBrack]
+      lexer expression `shouldBe` expected
 
 main :: IO ()
 main = hspec spec
