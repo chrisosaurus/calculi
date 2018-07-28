@@ -11,9 +11,12 @@ import Control.Applicative
 import Data.Char (isSpace, isAlphaNum)
 
 data Token = Lambda
+           | LAMBDA -- uppercase lambda
            | Period
            | LParen
            | RParen
+           | LBrack
+           | RBrack
            | Colon
            | Arrow
            | Symbol String
@@ -21,9 +24,12 @@ data Token = Lambda
 
 stringify_token :: Token -> String
 stringify_token Lambda = "\\"
+stringify_token LAMBDA = "/\\"
 stringify_token Period = "."
 stringify_token LParen = "("
 stringify_token RParen = ")"
+stringify_token LBrack = "["
+stringify_token RBrack = "]"
 stringify_token Colon  = ":"
 stringify_token Arrow  = "->"
 stringify_token (Symbol str) = str
@@ -38,9 +44,12 @@ lexer ""                     = Right []
 lexer (ch:rest) | isSpace ch = lexer (trim_space rest)
 lexer string                 =
     case     lexer_lambda string
+         <|> lexer_LAMBDA string
          <|> lexer_period string
          <|> lexer_lparen string
          <|> lexer_rparen string
+         <|> lexer_lbrack string
+         <|> lexer_rbrack string
          <|> lexer_colon  string
          <|> lexer_arrow  string
          <|> lexer_symbol string of
@@ -58,6 +67,10 @@ lexer_lambda :: String -> Maybe (Token, String)
 lexer_lambda ('\\':rest) = Just (Lambda, rest)
 lexer_lambda _           = Nothing
 
+lexer_LAMBDA :: String -> Maybe (Token, String)
+lexer_LAMBDA ('/':'\\':rest) = Just (LAMBDA, rest)
+lexer_LAMBDA _               = Nothing
+
 lexer_period :: String -> Maybe(Token, String)
 lexer_period ('.':rest) = Just (Period, rest)
 lexer_period _          = Nothing
@@ -69,6 +82,14 @@ lexer_lparen _          = Nothing
 lexer_rparen :: String -> Maybe(Token, String)
 lexer_rparen (')':rest) = Just (RParen, rest)
 lexer_rparen _          = Nothing
+
+lexer_lbrack :: String -> Maybe(Token, String)
+lexer_lbrack ('[':rest) = Just (LBrack, rest)
+lexer_lbrack _          = Nothing
+
+lexer_rbrack :: String -> Maybe(Token, String)
+lexer_rbrack (']':rest) = Just (RBrack, rest)
+lexer_rbrack _          = Nothing
 
 lexer_colon :: String -> Maybe(Token, String)
 lexer_colon (':':rest) = Just (Colon, rest)
@@ -99,10 +120,13 @@ should_break :: Char -> Bool
 should_break ch | isSpace ch = True
 should_break '('             = True
 should_break ')'             = True
+should_break '['             = True
+should_break ']'             = True
 should_break '.'             = True
 should_break ':'             = True
 -- start of arrow
 should_break '-'             = True
 should_break '\\'            = True
+should_break '/'             = True
 should_break _               = False
 
