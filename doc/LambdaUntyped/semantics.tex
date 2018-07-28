@@ -15,6 +15,9 @@
 % see https://tex.stackexchange.com/a/166630
 \usepackage[nounderscore]{syntax}
 
+% custom macro to insert labels into grammar
+\newcommand{\synlabel}[1]{\hfill \textit{#1}}
+
 \begin{document}
 
 \frontmatter
@@ -50,13 +53,13 @@
 
 \begin{grammar}
 
-    <e> ::=  x
-        \alt $\lambda$ x.<e>
-        \alt $<e>_1$ $<e>_2$
-        \alt unit
-        \alt true
-        \alt false
-        \alt if $<e>_1$ $<e>_2$ $<e>_3$
+    <e> ::=  x                           \synlabel{variable}
+        \alt $\lambda$ x.<e>             \synlabel{abstraction}
+        \alt $<e>_1$ $<e>_2$             \synlabel{application}
+        \alt unit                        \synlabel{unit literal}
+        \alt true                        \synlabel{true literal}
+        \alt false                       \synlabel{false literal}
+        \alt if $<e>_1$ $<e>_2$ $<e>_3$  \synlabel{if-else}
 
 \end{grammar}
 
@@ -64,10 +67,10 @@
 
 \begin{grammar}
 
-    <e> ::=  $\lambda$ x.<e>
-        \alt unit
-        \alt true
-        \alt false
+    <v> ::=  $\lambda$ x.<e>            \synlabel{abstraction}
+        \alt unit                       \synlabel{unit literal}
+        \alt true                       \synlabel{true literal}
+        \alt false                      \synlabel{false literal}
 
 \end{grammar}
 
@@ -75,10 +78,10 @@
 
 \begin{grammar}
 
-    <C[\textbullet]> ::=  \textbullet
-                     \alt <C[\textbullet]> $<e>_2$
-                     \alt $<v>_1$ <C[\textbullet]>
-                     \alt if <C[\textbullet]> $<e>_2$ $<e>_3$
+    <C[\textbullet]> ::=  \textbullet                          \synlabel{default}
+                     \alt <C[\textbullet]> $<e>_2$             \synlabel{application left}
+                     \alt $<v>_1$ <C[\textbullet]>             \synlabel{application right}
+                     \alt if <C[\textbullet]> $<e>_2$ $<e>_3$  \synlabel{if-else condition}
 \end{grammar}
 
 \hfill
