@@ -29,7 +29,7 @@ typed_parse_abs pi (LParen:Lambda:(Symbol binding):Colon:rest) =
                  Right _                   -> Nothing
 typed_parse_abs _  _ = Nothing
 
-parse_simple_type :: [Token] -> Maybe (SimpleType, [Token])
+parse_simple_type :: [Token] -> Maybe (SystemFType, [Token])
 parse_simple_type ((Symbol "Bool"):Arrow:rest) =
     case parse_simple_type rest of
         Nothing             -> Just (BoolType, rest)

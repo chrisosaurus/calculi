@@ -16,7 +16,7 @@ typecheck exp = result
                            Left str -> Left  str
                            Right _  -> Right exp
 
-typecheck_with_env :: Exp -> Env SimpleType -> Either String SimpleType
+typecheck_with_env :: Exp -> Env SystemFType -> Either String SystemFType
 
 -- t var
 typecheck_with_env (Var name) env =

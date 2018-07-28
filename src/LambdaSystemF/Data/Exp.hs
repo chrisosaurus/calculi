@@ -1,35 +1,41 @@
 module LambdaSystemF.Data.Exp
 (
     Exp (..),
-    SimpleType (..),
+    SystemFType (..),
     is_normal_form,
 )
 where
 
 import Shared.Data.Env
 
-data SimpleType = UnitType
+data SystemFType = UnitType
                 | BoolType
-                | FuncType SimpleType SimpleType
+                | FuncType SystemFType SystemFType
+                | TypeVariable String
+                | UniversalType String SystemFType
     deriving (Eq)
 
-instance Show SimpleType where
-    show = showSimpleType
+instance Show SystemFType where
+    show = showSystemFType
 
-showSimpleType :: SimpleType -> String
-showSimpleType UnitType = "Unit"
-showSimpleType BoolType = "Bool"
-showSimpleType (FuncType l r) = res
-    where l_t = showSimpleType l
-          r_t = showSimpleType r
+showSystemFType :: SystemFType -> String
+showSystemFType UnitType = "Unit"
+showSystemFType BoolType = "Bool"
+showSystemFType (FuncType l r) = res
+    where l_t = showSystemFType l
+          r_t = showSystemFType r
           res = l_t ++ "->" ++ r_t
+showSystemFType (TypeVariable var) = var
+showSystemFType (UniversalType var inner) = var
+    where inner_t = showSystemFType inner
+          res = "forall " ++ var ++ "." ++ inner_t
 
 data Exp = Var String
          --   binding type
-         | Abs String SimpleType Exp
+         | Abs String SystemFType Exp
          -- an Abs is evaluated to an AbsClosure when first encountered
          --          binding type
-         | AbsClosure String SimpleType Exp (Env Exp)
+         | AbsClosure String SystemFType Exp (Env Exp)
          | App Exp Exp
          | ExpUnit
          | ExpTrue
