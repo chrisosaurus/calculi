@@ -82,7 +82,7 @@
 
     <T> ::= T $\rightarrow$ T         \synlabel{function type}
         \alt X                        \synlabel{type variable}
-        \alt $\forall$X.t             \synlabel{universal type}
+        \alt $\forall$X.<e>           \synlabel{universal type}
         \alt Unit                     \synlabel{unit type}
         \alt Bool                     \synlabel{bool type}
 
@@ -106,6 +106,7 @@
                      \alt <C[\textbullet]> $<e>_2$             \synlabel{application left}
                      \alt $<v>_1$ <C[\textbullet]>             \synlabel{application right}
                      \alt if <C[\textbullet]> $<e>_2$ $<e>_3$  \synlabel{if-else condition}
+                     \alt <C[\textbullet]> [$<T>$]             \synlabel{type application}
 
 \end{grammar}
 
@@ -169,6 +170,19 @@
                 \rightarrow
                 \quad
                 e_1 [v_2 / x]
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+             $ }
+    \RightLabel{\it type application}
+    \UnaryInfC{ $
+                (\Lambda X . e_1) [T]
+                \quad
+                \rightarrow
+                \quad
+                e_1 [T / X]
                 $ }
 \end{prooftree}
 
@@ -272,6 +286,34 @@
                 \Gamma
                 \vdash
                 e_1 \ e_2 : T_2
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                \Gamma, X
+                \vdash
+                e : T
+             $ }
+    \RightLabel{\it T-type-abstraction}
+    \UnaryInfC{ $
+                \Gamma
+                \vdash
+                (\Lambda X . \ e) : \forall X . T
+                $ }
+\end{prooftree}
+
+\begin{prooftree}
+    \AxiomC{ $
+                \Gamma
+                \vdash
+                e : \forall X.T_1
+             $ }
+    \RightLabel{\it T-type-application}
+    \UnaryInfC{ $
+                \Gamma
+                \vdash
+                e [T_2] : T_1 [ T_2 / X]
                 $ }
 \end{prooftree}
 
