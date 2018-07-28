@@ -53,7 +53,7 @@
 \begin{grammar}
 
     <e> ::=  x                            \synlabel{variable}
-        \alt $\lambda$ x:T.<e>            \synlabel{abstraction}
+        \alt $\lambda$ x:<T>.<e>          \synlabel{abstraction}
         \alt $<e>_1$ $<e>_2$              \synlabel{application}
         \alt $\Lambda$ X.<e>              \synlabel{type abstraction}
         \alt e [T]                        \synlabel{type application}
@@ -80,7 +80,7 @@
 
 \begin{grammar}
 
-    <T> ::= T $\rightarrow$ T         \synlabel{function type}
+    <T> ::= <T> $\rightarrow$ <T>     \synlabel{function type}
         \alt X                        \synlabel{type variable}
         \alt $\forall$X.<T>           \synlabel{universal type}
         \alt Unit                     \synlabel{unit type}
@@ -92,9 +92,9 @@
 
 \begin{grammar}
 
-    <$\Gamma$> ::=  $\varnothing$      \synlabel{empty context}
-               \alt $\Gamma$, x:T      \synlabel{term variable binding}
-               \alt $\Gamma$, X        \synlabel{type variable binding}
+    <$\Gamma$> ::=  $\varnothing$                          \synlabel{empty context}
+               \alt \syntleft $\Gamma$\syntright, x:<T>    \synlabel{term variable binding}
+               \alt \syntleft $\Gamma$\syntright, X        \synlabel{type variable binding}
 
 \end{grammar}
 
