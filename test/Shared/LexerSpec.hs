@@ -107,6 +107,25 @@ spec = do
       let expected = Right [Symbol "x", LBrack, Symbol "Unit", RBrack]
       lexer expression `shouldBe` expected
 
+  describe "round trip (string -> tokens -> string)" $ do
+    it "testing stringifying lexer output gives input" $ do
+      mapM_ roundtrip [ "("
+                      , ")"
+                      , "["
+                      , "]"
+                      , "\\"
+                      , "/\\"
+                      , ":"
+                      , "."
+                      , "->"
+                      , "symbol"
+                      ]
+
+roundtrip input = expected `shouldBe` result
+    where expected = Right input
+          temp = lexer input
+          result = fmap stringify_tokens temp
+
 main :: IO ()
 main = hspec spec
 
