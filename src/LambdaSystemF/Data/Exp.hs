@@ -37,6 +37,9 @@ data Exp = Var String
          --          binding type
          | AbsClosure String SystemFType Exp (Env Exp)
          | App Exp Exp
+         -- we probably also need a closure form for this too :/
+         | TypeAbs String Exp
+         | TypeApp Exp SystemFType
          | ExpUnit
          | ExpTrue
          | ExpFalse
@@ -53,6 +56,8 @@ showExp (Abs name ty body) = "(\\" ++ name ++ ":" ++ (show ty) ++ "." ++
 showExp (AbsClosure name ty body _) = showExp (Abs name ty body)
 showExp (App left right) = "(" ++ (showExp left) ++ " " ++
                                   (showExp right) ++ ")"
+showExp (TypeAbs name exp) = "(/\\" ++ name ++ "." ++ (showExp exp)
+showExp (TypeApp exp ty) = (showExp exp) ++ " [" ++ (show ty) ++ "]"
 showExp ExpUnit = "unit"
 showExp ExpTrue = "true"
 showExp ExpFalse = "false"
