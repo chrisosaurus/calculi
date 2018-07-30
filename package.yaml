@@ -53,6 +53,15 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - calculi
+  LambdaSystemF:
+    main:                Main.hs
+    source-dirs:         app/LambdaSystemF
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - calculi
 
 tests:
   calculi-test:
