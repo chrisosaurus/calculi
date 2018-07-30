@@ -63,9 +63,9 @@ parse_systemf_type_app pi (LParen:body) =
     case pi body of
         Left _                   -> Nothing
         Right (e, (LBrack:rest)) ->  case parse_systemf_type rest of
-                                        Nothing                             -> Nothing
+                                        Nothing                                    -> Nothing
                                         Just (systemf_type, (RBrack:RParen:rest')) -> Just ((TypeApp e systemf_type), rest')
-                                        Just _                              -> Nothing
+                                        Just _                                     -> Nothing
         Right _                  -> Nothing
 parse_systemf_type_app _ _ = Nothing
 
