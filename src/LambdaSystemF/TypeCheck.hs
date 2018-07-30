@@ -33,7 +33,7 @@ typecheck_with_env (Abs name ty body) env = do
 -- t abs closure
 -- AbsClosure are created during Eval so should not exist at type checking
 -- the absclosure 'env' is of type (Env Exp) and so cannot be used here
-typecheck_with_env (AbsClosure _ _ _ _) _ = Left $ "Internal error: typechecker encountere AbsClosure"
+typecheck_with_env (AbsClosure _ _ _ _) _ = Left $ "Internal error: typechecker encountered AbsClosure"
 
 -- t app
 typecheck_with_env (App left right) env = do
