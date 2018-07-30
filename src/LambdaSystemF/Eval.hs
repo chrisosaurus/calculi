@@ -38,6 +38,12 @@ eval_with_env (App exp1 exp2) env = eval_with_env new_app env
 eval_with_env (Abs string type_str exp) env = new_abs
     where new_abs = AbsClosure string type_str exp env
 
+-- Ignore type during Eval, only used during Type Checking.
+eval_with_env (TypeAbs _ exp) env = eval_with_env exp env
+
+-- Ignore type during Eval, only used during Type Checking.
+eval_with_env (TypeApp exp _) env = eval_with_env exp env
+
 eval :: Exp -> Exp
 eval exp = result
     where blank_env  = env_new

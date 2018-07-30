@@ -37,7 +37,6 @@ data Exp = Var String
          --          binding type
          | AbsClosure String SystemFType Exp (Env Exp)
          | App Exp Exp
-         -- we probably also need a closure form for this too :/
          | TypeAbs String Exp
          | TypeApp Exp SystemFType
          | ExpUnit
