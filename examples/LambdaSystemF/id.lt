@@ -1,1 +1,1 @@
-(\x:Bool.x)
+(\x:forall T.T.x)
