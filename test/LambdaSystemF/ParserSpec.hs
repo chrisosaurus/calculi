@@ -42,6 +42,28 @@ spec = do
       let expression = [LParen, Lambda, Symbol "x", Colon, Symbol "Bool", Period, Symbol "x", RParen]
       let expected = Right (Abs "x" BoolType (Var "x"))
       parse expression `shouldBe` expected
+    it "type abs" $ do
+      let expression = [LParen, LAMBDA, Symbol "X", Period, Symbol "x", RParen]
+      let expected = Right (TypeAbs "X" (Var "x"))
+      parse expression `shouldBe` expected
+    it "type variable" $ do
+      -- (\x:T. x)
+      let expression = [LParen, Lambda, Symbol "x", Colon, Symbol "T",
+                        Period, Symbol "x", RParen]
+      let expected = Right (Abs "x" (TypeVariable "T") (Var "x"))
+      parse expression `shouldBe` expected
+    it "universal type id function" $ do
+      -- (\x:forall T.T. x)
+      let expression = [LParen, Lambda, Symbol "x", Colon,
+                            Symbol "forall", Symbol "T", Period, Symbol "T",
+                        Period, Symbol "x", RParen]
+      let expected = Right (Abs "x" (UniversalType "T" (TypeVariable "T")) (Var "x"))
+      parse expression `shouldBe` expected
+    it "silly type application" $ do
+      -- (x[Q])
+      let expression = [LParen, Symbol "x", LBrack, Symbol "Q", RBrack, RParen]
+      let expected = Right (TypeApp (Var "x") (TypeVariable "Q"))
+      parse expression `shouldBe` expected
 
   describe "compound parser tests" $ do
     it "fixpoint" $ do

@@ -106,6 +106,10 @@ spec = do
       let expression = "x [Unit]"
       let expected = Right [Symbol "x", LBrack, Symbol "Unit", RBrack]
       lexer expression `shouldBe` expected
+    it "universal type" $ do
+      let expression = "forall X . x"
+      let expected = Right [Symbol "forall", Symbol "X", Period, Symbol "x"]
+      lexer expression `shouldBe` expected
 
   describe "round trip (string -> tokens -> string)" $ do
     it "testing stringifying lexer output gives input" $ do
