@@ -14,6 +14,8 @@ typecheck exp = result
           ty        = typecheck_with_env exp blank_env
           result    = case ty of
                            Left str -> Left  str
+-- TODO FIXME the problem here is we *throw* away the new types, which have been instantiated,
+-- and instead return the original expression in all it's uninstantiated glory
                            Right _  -> Right exp
 
 typecheck_with_env :: Exp -> Env SystemFType -> Either String SystemFType
@@ -74,4 +76,27 @@ typecheck_with_env (IfElse cond left right) env = do
                                   "'. Expected them to be of the same type."
          otherwise -> Left $ "If expression condition was of type '" ++
                              (show cond_ty) ++ "'. Expected Bool."
+
+typecheck_with_env (TypeAbs tvar inner) env = do
+    inner_ty <- typecheck_with_env inner env
+    Right $ UniversalType tvar inner_ty
+
+typecheck_with_env (TypeApp exp ty) env = do
+    exp_ty <- typecheck_with_env exp env
+    case exp_ty of
+        (UniversalType tvar body) -> Right $ instantiate_type body tvar ty
+        ty                        -> Left $ "Type application had lhs with type '" ++
+                                            (show exp_ty) ++ "', expected a universal type"
+
+instantiate_type :: SystemFType -> String -> SystemFType -> SystemFType
+instantiate_type UnitType _ _ = UnitType
+instantiate_type BoolType _ _ = BoolType
+instantiate_type (FuncType left right) tvar ty = FuncType nleft nright
+    where nleft  = instantiate_type left  tvar ty
+          nright = instantiate_type right tvar ty
+instantiate_type (TypeVariable var) tvar ty | var == tvar = ty
+instantiate_type t@(TypeVariable _) _    _                = t
+-- if we hit a new UniversalType binding the same name, stop traversal (shadowing)
+instantiate_type t@(UniversalType var _)      tvar _ | var == tvar = t
+instantiate_type (UniversalType var inner_ty) tvar ty              = instantiate_type inner_ty tvar ty
 
