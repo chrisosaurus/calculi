@@ -23,7 +23,7 @@ build_parser :: [ParserFunction a] -> [Token] -> Either String a
 build_parser functions tokens = case parse_inner functions tokens of
                                      Left str               -> Left str
                                      Right (exp, [])        -> Right exp
-                                     Right (exp, remaining) -> Left $ "Failed to parse: " ++ (stringify_tokens tokens)
+                                     Right (exp, remaining) -> Left $ "Failed to completely parse: " ++ (stringify_tokens tokens)
 
 parse_inner :: [ParserFunction a] -> ParserInner a
 parse_inner functions tokens = case (foldl1 (<|>) applied_funcs) of
