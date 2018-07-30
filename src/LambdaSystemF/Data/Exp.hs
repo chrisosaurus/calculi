@@ -26,7 +26,7 @@ showSystemFType (FuncType l r) = res
           r_t = showSystemFType r
           res = l_t ++ "->" ++ r_t
 showSystemFType (TypeVariable var) = var
-showSystemFType (UniversalType var inner) = var
+showSystemFType (UniversalType var inner) = res
     where inner_t = showSystemFType inner
           res = "forall " ++ var ++ "." ++ inner_t
 
