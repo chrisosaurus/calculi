@@ -12,14 +12,14 @@ parse = build_parser [
     parse_unit  "true"  ExpTrue,
     parse_unit  "false" ExpFalse,
     parse_unit  "unit"  ExpUnit,
-    typed_parse_abs,
+    parse_simply_typed_abs,
     parse_triple "if"   IfElse,
     parse_var           Var,
     parse_app           App
                      ]
 
-typed_parse_abs :: ParserFunction Exp
-typed_parse_abs pi (LParen:Lambda:(Symbol binding):Colon:rest) =
+parse_simply_typed_abs :: ParserFunction Exp
+parse_simply_typed_abs pi (LParen:Lambda:(Symbol binding):Colon:rest) =
     case parse_simple_type rest of
         Nothing                   -> Nothing
         Just (simple_type, body)  ->
@@ -27,7 +27,7 @@ typed_parse_abs pi (LParen:Lambda:(Symbol binding):Colon:rest) =
                  Left _                    -> Nothing
                  Right (e, (RParen:rest')) -> Just ((Abs binding simple_type e), rest')
                  Right _                   -> Nothing
-typed_parse_abs _  _ = Nothing
+parse_simply_typed_abs _  _ = Nothing
 
 parse_simple_type :: [Token] -> Maybe (SimpleType, [Token])
 parse_simple_type ((Symbol "Bool"):Arrow:rest) =
