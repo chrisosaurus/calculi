@@ -55,8 +55,8 @@ showExp (Abs name ty body) = "(\\" ++ name ++ ":" ++ (show ty) ++ "." ++
 showExp (AbsClosure name ty body _) = showExp (Abs name ty body)
 showExp (App left right) = "(" ++ (showExp left) ++ " " ++
                                   (showExp right) ++ ")"
-showExp (TypeAbs name exp) = "(/\\" ++ name ++ "." ++ (showExp exp)
-showExp (TypeApp exp ty) = (showExp exp) ++ " [" ++ (show ty) ++ "]"
+showExp (TypeAbs name exp) = "(/\\" ++ name ++ "." ++ (showExp exp) ++ ")"
+showExp (TypeApp exp ty) = "(" ++ (showExp exp) ++ " [" ++ (show ty) ++ "])"
 showExp ExpUnit = "unit"
 showExp ExpTrue = "true"
 showExp ExpFalse = "false"
