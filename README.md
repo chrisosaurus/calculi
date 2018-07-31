@@ -78,7 +78,7 @@ To run an example
     (/\T.(\x:T.x))
 
     $ cat examples/LambdaSystemF/typeapp.lt
-    ((\x:forall T.T.x) [Bool])
+    ((/\T.(\x:T.x)) [Bool])
     $ stack exec LambdaSystemF examples/LambdaSystemF/typeapp.lt
     (\x:Bool.x)
 
