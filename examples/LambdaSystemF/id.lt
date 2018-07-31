@@ -1,1 +1,1 @@
-(\x:forall T.T.x)
+(/\T.(\x:T.x))

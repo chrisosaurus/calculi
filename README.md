@@ -67,19 +67,13 @@ To run an example
     $ make
 
     $ cat examples/LambdaSystemF/id.lt
-    (\x:forall T.T.x)
+    (/\T.(\x:T.x))
     $ stack exec LambdaSystemF examples/LambdaSystemF/id.lt
-    (\x:forall T.T.x)
-
-
-    $ cat examples/LambdaSystemF/typeabs.lt
-    (/\T.(\x:T.x))
-    $ stack exec LambdaSystemF examples/LambdaSystemF/typeabs.lt
     (/\T.(\x:T.x))
 
-    $ cat examples/LambdaSystemF/typeapp.lt
+    $ cat examples/LambdaSystemF/inst.lt
     ((/\T.(\x:T.x)) [Bool])
-    $ stack exec LambdaSystemF examples/LambdaSystemF/typeapp.lt
+    $ stack exec LambdaSystemF examples/LambdaSystemF/inst.lt
     (\x:Bool.x)
 
 ### Lambda System F + Effects
