@@ -38,11 +38,14 @@ eval_with_env (App exp1 exp2) env = eval_with_env new_app env
 eval_with_env (Abs string type_str exp) env = new_abs
     where new_abs = AbsClosure string type_str exp env
 
--- Ignore type during Eval, only used during Type Checking.
-eval_with_env (TypeAbs _ exp) env = eval_with_env exp env
+-- Has no influence on runtime but preserve TypeAbs
+-- e.g. the top level expression could be an unapplied TypeAbs
+eval_with_env (TypeAbs var exp) env = TypeAbs var nexp
+    where nexp = eval_with_env exp env
 
--- Ignore type during Eval, only used during Type Checking.
-eval_with_env (TypeApp exp _) env = eval_with_env exp env
+-- Type Checking should remove all TypeApp
+eval_with_env (TypeApp exp ty) env = TypeApp nexp ty
+    where nexp = eval_with_env exp env
 
 eval :: Exp -> Exp
 eval exp = result
