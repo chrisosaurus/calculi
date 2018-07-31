@@ -60,8 +60,21 @@ To run an example
 
 ### Lambda System F
 
-Nothing to see here yet
+System F lambda calculus.
 
+To run an example
+
+    $ make
+
+    $ cat examples/LambdaSystemF/id.lt
+    (\x:forall T.T.x)
+    $ stack exec LambdaSystemF examples/LambdaSystemF/id.lt
+    (\x:forall T.T.x)
+
+    $ cat examples/LambdaSystemF/inst.lt
+    ((\x:forall T.T.x) [Bool])
+    $ stack exec LambdaSystemF examples/LambdaSystemF/inst.lt
+    (\x:Bool.x)
 
 ### Lambda System F + Effects
 
