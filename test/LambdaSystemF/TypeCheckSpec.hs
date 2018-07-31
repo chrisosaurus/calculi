@@ -17,22 +17,22 @@ spec = do
   describe "simple typecheck tests" $ do
     it "Unit" $ do
       let expression = ExpUnit
-      let expected = Right UnitType
+      let expected = Right (expression, UnitType)
       typecheck_with_env expression blank_env `shouldBe` expected
 
     it "True" $ do
       let expression = ExpTrue
-      let expected = Right BoolType
+      let expected = Right (expression, BoolType)
       typecheck_with_env expression blank_env `shouldBe` expected
 
     it "False" $ do
       let expression = ExpFalse
-      let expected = Right BoolType
+      let expected = Right (expression, BoolType)
       typecheck_with_env expression blank_env `shouldBe` expected
 
     it "IfElse True error" $ do
       let expression = IfElse ExpTrue ExpUnit ExpUnit
-      let expected = Right UnitType
+      let expected = Right (expression, UnitType)
       typecheck_with_env expression blank_env `shouldBe` expected
 
   describe "simple typecheck error tests" $ do
@@ -54,12 +54,12 @@ spec = do
   describe "lambda tests" $ do
     it "simple lambda" $ do
       let expression = (Abs "x" BoolType (Var "x"))
-      let expected = Right $ FuncType BoolType BoolType
+      let expected = Right (expression, (FuncType BoolType BoolType))
       typecheck_with_env expression blank_env `shouldBe` expected
 
     it "simple application" $ do
       let expression = (App (Abs "x" BoolType (Var "x")) ExpTrue)
-      let expected = Right BoolType
+      let expected = Right (expression, BoolType)
       typecheck_with_env expression blank_env `shouldBe` expected
 
   describe "lambda error tests" $ do
