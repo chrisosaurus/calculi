@@ -38,14 +38,16 @@ eval_with_env (App exp1 exp2) env = eval_with_env new_app env
 eval_with_env (Abs string type_str exp) env = new_abs
     where new_abs = AbsClosure string type_str exp env
 
+-- Type Checking should have removed all *applied* TypeAbs
 -- Has no influence on runtime but preserve TypeAbs
 -- e.g. the top level expression could be an unapplied TypeAbs
-eval_with_env (TypeAbs var exp) env = TypeAbs var nexp
-    where nexp = eval_with_env exp env
+-- cannot pass through an unapplied TypeAbs
+eval_with_env exp@(TypeAbs _ _) _ = exp
 
 -- Type Checking should remove all TypeApp
-eval_with_env (TypeApp exp ty) env = TypeApp nexp ty
-    where nexp = eval_with_env exp env
+-- this being here is an error
+-- cannot pass through a TypeAbs
+eval_with_env exp@(TypeApp _ _) _ = exp
 
 eval :: Exp -> Exp
 eval exp = result

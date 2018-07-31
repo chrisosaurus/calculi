@@ -53,12 +53,7 @@ spec = do
   describe "LAMBDA tests" $ do
     it "simple LAMBDA" $ do
       let expression = (TypeAbs "T" (AbsClosure "x" BoolType (Var "x") env_new))
-      let expected = (AbsClosure "x" BoolType (Var "x") env_new)
-      eval expression `shouldBe` expected
-
-    it "simple LAMBDA application" $ do
-      let expression = (TypeApp (App (Abs "x" BoolType (Var "x")) ExpUnit) BoolType)
-      let expected = ExpUnit
+      let expected = (TypeAbs "T" (AbsClosure "x" BoolType (Var "x") env_new))
       eval expression `shouldBe` expected
 
 main :: IO ()
