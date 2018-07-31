@@ -77,9 +77,9 @@ To run an example
     $ stack exec LambdaSystemF examples/LambdaSystemF/typeabs.lt
     (/\T.(\x:T.x))
 
-    $ cat examples/LambdaSystemF/inst.lt
+    $ cat examples/LambdaSystemF/typeapp.lt
     ((\x:forall T.T.x) [Bool])
-    $ stack exec LambdaSystemF examples/LambdaSystemF/inst.lt
+    $ stack exec LambdaSystemF examples/LambdaSystemF/typeapp.lt
     (\x:Bool.x)
 
 ### Lambda System F + Effects
