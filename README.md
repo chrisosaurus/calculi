@@ -58,7 +58,7 @@ To run an example
     (\x:Bool.x)
 
 
-### Lambda System F
+## Lambda System F
 
 System F lambda calculus.
 
@@ -76,12 +76,12 @@ To run an example
     $ stack exec LambdaSystemF examples/LambdaSystemF/inst.lt
     (\x:Bool.x)
 
-### Lambda System F + Effects
+## Lambda System F + Effects
 
 Nothing to see here yet
 
 
-### Lambda Pi
+## Lambda Pi
 
 Nothing to see here yet
 
